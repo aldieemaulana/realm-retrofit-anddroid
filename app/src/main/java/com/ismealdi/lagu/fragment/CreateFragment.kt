@@ -2,6 +2,7 @@ package com.ismealdi.lagu.fragment
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,9 @@ import com.ismealdi.lagu.utils.Texts
 import io.realm.kotlin.createObject
 import kotlinx.android.synthetic.main.fragment_create.*
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
+
+
 
 
 class CreateFragment : BaseFragment() {
@@ -48,14 +50,25 @@ class CreateFragment : BaseFragment() {
     }
 
     private fun doValidate() {
-        if(textName.text.toString().isEmpty() && textDate.text.toString().isEmpty()) {
+        val name = textName.text.toString()
+        val date = textDate.text.toString()
+
+        if(name.isEmpty() && date.isEmpty()) {
             setError("Name and date value cannot be empty")
-        }else if(textDate.text.toString().isEmpty()) {
+        }else if(date.isEmpty()) {
             setError("Please select the date")
-        }else if(textName.text.toString().isEmpty()) {
+        }else if(name.isEmpty()) {
             setError("Please fill in name value")
         }else{
-            doCreateEvent()
+            val sdf = SimpleDateFormat("d/M/y k:m")
+            val dateTime = sdf.parse(date)
+            val currentDateTime = sdf.parse(sdf.format(Calendar.getInstance().time))
+
+            if (dateTime.compareTo(currentDateTime) >= 0) {
+                doCreateEvent()
+            }else{
+                setError("Date time cannot be lesser than current date time")
+            }
         }
     }
 
@@ -65,10 +78,12 @@ class CreateFragment : BaseFragment() {
         mActivity.realm.executeTransaction { _ ->
             val id = mActivity.getLastPrimaryOfEvent()
             val event = mActivity.realm.createObject<Event>(id)
+            val datetime = textDate.text.toString().split(" ")
 
             event.name = textName.text.toString()
             event.description = textDescription.text.toString()
-            event.date = textDate.text.toString()
+            event.date = datetime[0]
+            event.time = datetime[1]
 
             doSuccess(id)
         }
@@ -78,36 +93,55 @@ class CreateFragment : BaseFragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun doSuccess(id: Int) {
-        val sdf = SimpleDateFormat("d/M/yyyy hh:mm:ss")
-        val today = Date()
-        val date = sdf.parse(textDate.text.toString() + " ${today.hours}:${today.minutes}:${today.seconds}" )
+        val sdf = SimpleDateFormat("d/M/y k:m")
+        val date = sdf.parse(textDate.text.toString())
 
-        mActivity.scheduleNotification(mActivity.getNotification(textName.text.toString(), textDescription.text.toString()), (date.time - 1800000), id)
+        mActivity.scheduleNotification(mActivity.getNotification(textName.text.toString(), textDescription.text.toString(), id), (date.time - 1800000), id)
 
         textName.setText("")
         textDescription.setText("")
         textDate.text = ""
 
-        setError("Data is saved!")
+        setError("Data is saved!", false)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initCalendarDialog() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
+        val timePickerDialog = TimePickerDialog(context,
+                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                    textDate.text = textDate.text.toString() + " $hourOfDay:$minute"
+                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true)
 
-        datePicker = DatePickerDialog(activity, DatePickerDialog.OnDateSetListener { view, y, m, d ->
-            textDate.text =  "$d/$m/$y"
+        timePickerDialog.setOnCancelListener {
+            textDate.text = ""
+        }
+
+        datePicker = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, y, m, d ->
+            val mm = m + 1
+            textDate.text =  "$d/$mm/$y"
+            timePickerDialog.show()
         }, year, month, day)
 
         datePicker.datePicker.minDate = System.currentTimeMillis() - 1000
+
+        datePicker.setOnCancelListener {
+            textDate.text = ""
+        }
     }
 
-    private fun setError(text: String) {
+    private fun setError(text: String, shake: Boolean = true) {
         textError.text  = text
-        Texts().shakeTextView(textError, context!!)
+        if(shake) {
+            textError.setTextColor(resources.getColor(R.color.colorError))
+            Texts().shakeTextView(textError, context!!)
+        }else{
+            textError.setTextColor(resources.getColor(R.color.colorBlack))
+        }
     }
 
 

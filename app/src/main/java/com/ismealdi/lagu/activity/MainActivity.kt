@@ -128,10 +128,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         init()
 
-        scheduleNotification(getNotification("Test Alarm", "1 second delay", 1), 1 * 1000, 4)
-        scheduleNotification(getNotification("Test Alarm", "5 second delay", 2), 5 * 1000, 2)
-        scheduleNotification(getNotification("Test Alarm", "35 second delay",3), 35 * 1000, 1)
-        scheduleNotification(getNotification("Test Alarm", "40 second delay",4), 40 * 1000, 3)
     }
 
     fun refreshWishList() {
@@ -170,16 +166,17 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         notificationIntent.putExtra(NOTIFICATION_ID, id)
         notificationIntent.putExtra(NOTIFICATION, notification)
 
-        val pendingIntent = PendingIntent.getActivity(applicationContext, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(applicationContext, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, delayTime, pendingIntent)
     }
 
-    internal fun getNotification(title: String = "", content: String = "", id: Int = 0): Notification {
+    internal fun getNotification(title: String = "", content: String = "", id: Int = 0) : Notification {
         val builder = NotificationCompat.Builder(applicationContext)
         val intent = Intent(applicationContext, DetailActivity::class.java)
-        intent.putExtra(Constants.FRAGMENT.CALENDAR.INTENT.SELECTED_ID, id)
         val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
+
+        intent.putExtra(Constants.FRAGMENT.CALENDAR.INTENT.SELECTED_ID, id)
 
         builder.setSmallIcon(R.drawable.ic_create_white)
         builder.setContentIntent(pendingIntent)
@@ -187,9 +184,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         builder.setContentTitle(title)
         builder.setContentText(content)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        notificationManager.notify(1, builder.build())
         return builder.build()
     }
 

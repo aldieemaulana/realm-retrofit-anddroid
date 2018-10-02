@@ -9,17 +9,11 @@ import com.ismealdi.lagu.R
 import com.ismealdi.lagu.adapter.EventAdapter
 import com.ismealdi.lagu.base.BaseActivity
 import com.ismealdi.lagu.databinding.ActivityCalendarDetailBinding
-
 import com.ismealdi.lagu.model.Event
 import com.ismealdi.lagu.utils.Constants
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.fragment_wish_list.*
 import kotlinx.android.synthetic.main.toolbar_primary.*
-import android.app.NotificationManager
-import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
-
-
 
 /**
  * Created by Al on 30/09/2018
@@ -49,7 +43,9 @@ class DetailActivity : BaseActivity() {
             selectedId = intent.getIntExtra(Constants.FRAGMENT.CALENDAR.INTENT.SELECTED_ID, 0)
             if(selectedId > 0) {
                 val data = realm.where<Event>().equalTo("id", selectedId).findFirst()
-                selectedDate = data!!.date
+                if (data != null) {
+                    selectedDate = data.date
+                }
             }
         }
 
@@ -61,15 +57,6 @@ class DetailActivity : BaseActivity() {
             initList()
 
         setListener()
-        clearNotification()
-    }
-
-    private fun clearNotification() {
-        if(selectedId > 0) {
-            val ns = Context.NOTIFICATION_SERVICE
-            val nMgr = applicationContext.getSystemService(ns) as NotificationManager
-            nMgr.cancel(selectedId)
-        }
     }
 
     private fun setListener() {
