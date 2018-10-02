@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="title" type="String" />
+        <variable name="back" type="Integer" />
+        <variable name="photo" type="Integer" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.calendar.DetailActivity"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <requestFocus />
+
+        <include layout="@layout/toolbar_primary" tools:title="@{title}" tools:back="@{back}" tools:photo="@{photo}"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="0dp"
+            android:clipToPadding="false"
+            android:scrollbars="none"
+            android:nestedScrollingEnabled="false"
+            android:isScrollContainer="false"
+            tools:targetApi="lollipop"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="title" type="String" />
+        <variable name="back" type="Integer" />
+        <variable name="photo" type="Integer" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/container"
+        android:background="@color/colorBackgroundPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        tools:context=".activity.MainActivity">
+
+        <include layout="@layout/toolbar_primary" tools:title="@{title}" tools:back="@{back}" tools:photo="@{photo}"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            app:layout_insetEdge="top"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:background="@color/colorWhite"
+            app:layout_anchorGravity="bottom"
+            app:menu="@menu/navigation"
+            app:labelVisibilityMode="unlabeled" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

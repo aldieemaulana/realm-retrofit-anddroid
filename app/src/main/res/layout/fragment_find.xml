@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.FindFragment"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <LinearLayout
+        android:background="@drawable/input_primary_flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.ismealdi.lagu.view.AmTextView
+                app:Amfont="M"
+                style="@style/AppTheme.TextLabelInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Search an Artist"
+                android:textAllCaps="true"
+                android:id="@+id/label_search"
+                android:layout_marginBottom="@dimen/component_extra_small"
+                android:textSize="@dimen/text_extra_small" />
+            <com.ismealdi.lagu.view.AmTextView
+                android:layout_toRightOf="@id/label_search"
+                android:layout_alignParentRight="true"
+                app:Amfont="L"
+                android:id="@+id/textError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorError"
+                android:gravity="end"
+                android:textSize="@dimen/text_extra_small"
+                android:paddingRight="100dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_toEndOf="@id/label_search"
+                android:paddingEnd="100dp"
+                tools:ignore="RtlSymmetry"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginTop="-20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp">
+            <com.ismealdi.lagu.view.AmEditText
+                app:Amfont="R"
+                android:layout_marginTop="20dp"
+                android:id="@+id/textArtistName"
+                style="@style/AppTheme.TextInput"
+                android:hint="@string/text_search_hint"
+                android:lines="1"
+                android:imeActionLabel="Done"
+                android:singleLine="true"
+                android:inputType="textPersonName"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/buttonSearch"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:padding="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="@dimen/component_big"
+                android:layout_marginEnd="@dimen/component_big"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_find"
+                android:background="@drawable/button_white_circle"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <requestFocus />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="0dp"
+        android:scrollbars="none"
+        android:nestedScrollingEnabled="false"
+        android:isScrollContainer="false"
+        tools:targetApi="lollipop"
+        tools:ignore="RtlSymmetry" />
+
+</LinearLayout>

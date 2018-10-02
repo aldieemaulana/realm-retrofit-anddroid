@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_find"
+        android:icon="@drawable/ic_find"
+        android:title="@string/title_find" />
+
+    <item
+        android:id="@+id/navigation_wish_list"
+        android:icon="@drawable/ic_wish_list"
+        android:title="@string/title_wish_list" />
+
+    <item
+        android:id="@+id/navigation_calendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/title_calendar" />
+
+    <item
+        android:id="@+id/navigation_create"
+        android:icon="@drawable/ic_create"
+        android:title="@string/title_create" />
+
+    <item
+        android:id="@+id/navigation_log_out"
+        android:icon="@drawable/ic_log_out"
+        android:title="@string/title_log_out" />
+
+</menu>

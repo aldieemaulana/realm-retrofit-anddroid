@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Lagu</string>
+
+    <string name="title_find">Find</string>
+    <string name="title_wish_list">Wish list</string>
+    <string name="title_create">Create</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_log_out">Log Out</string>
+    <string name="text_only_allow_with_google">Only Google User Allowed</string>
+    <string name="text_proceed">Proceed</string>
+    <string name="text_hi">Hi</string>
+    <string name="text_please_log_in">Please Log In</string>
+
+    <string name="server_client_id">1076946378478-83kj0t38vstlvsrt675bl6kumc25sbvj.apps.googleusercontent.com</string>
+    <string name="text_search_hint">Artist Name</string>
+    <string name="text_create">Create</string>
+    <string name="text_name">Name of Event</string>
+    <string name="text_description">Description</string>
+    <string name="text_date">Date</string>
+</resources>
