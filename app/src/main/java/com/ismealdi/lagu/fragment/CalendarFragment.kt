@@ -31,7 +31,9 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDateChangeListener { _, y, m, d ->
             val intent = Intent(context, DetailActivity::class.java)
 
-            intent.putExtra(Constants.FRAGMENT.CALENDAR.INTENT.SELECTED_DATE, "$d/$m/$y")
+            val mm = m + 1
+
+            intent.putExtra(Constants.FRAGMENT.CALENDAR.INTENT.SELECTED_DATE, "$d/$mm/$y")
             startActivityForResult(intent, Constants.FRAGMENT.CALENDAR.INTENT.REQUEST_CODE)
         }
     }
